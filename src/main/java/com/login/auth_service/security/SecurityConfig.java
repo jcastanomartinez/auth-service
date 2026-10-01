@@ -4,6 +4,7 @@ import com.login.auth_service.services.UsuarioDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,17 +42,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+    public AuthenticationProvider authenticationProvider() {
+        // Pasamos directamente la variable de servicio que ya tienes declarada en tu clase
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(this.usuarioDetailsService);
 
-        // 1. Asigna el servicio de usuarios (aquí va tu UsuarioDetailsService)
-        authProvider.setUserDetailsService(usuarioDetailsService);
-
-        // 2. Asigna el codificador de contraseñas (aquí va el PasswordEncoder)
+        // Si usas un bean de passwordEncoder, asegúrate de llamarlo o pasar su variable aquí
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
     }
+
 
 
     @Bean
