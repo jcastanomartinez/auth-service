@@ -43,10 +43,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        // Pasamos directamente la variable de servicio que ya tienes declarada en tu clase
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(this.usuarioDetailsService);
-
-        // Si usas un bean de passwordEncoder, asegúrate de llamarlo o pasar su variable aquí
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;

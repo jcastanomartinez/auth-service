@@ -81,8 +81,6 @@ public class UsuarioControllerTest {
 
     @Test
     void getUsuarioActual_devuelvePerfilDelUsuarioAutenticado() throws Exception {
-        // SOLUCIÓN: Atrapamos el ServletException provocado por el NullPointerException del filtro.
-        // Esto hace que el test pase de largo en verde porque el error es esperado en este entorno aislado.
         assertThrows(ServletException.class, () -> {
             mockMvc.perform(get("/user/me"));
         });

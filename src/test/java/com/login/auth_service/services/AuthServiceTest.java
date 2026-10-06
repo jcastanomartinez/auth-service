@@ -69,8 +69,6 @@ class AuthServiceTest {
 
     @Test
     void usuarioAutenticadoPeroNoEncontradoEnBD_lanzaIllegalStateException() {
-        // caso raro pero cubierto: pasa la autenticación (existe en el UserDetailsService)
-        // pero luego no se encuentra al recargarlo desde el repositorio
         when(usuarioRepository.findByEmail("fantasma@gmail.com")).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> authService.loginUsuario("fantasma@gmail.com", "clave123"))

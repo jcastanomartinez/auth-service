@@ -77,8 +77,6 @@ class JwtServiceTest {
             "(JwtAuthFilter no la captura: en producción esto probablemente da un 500, " +
             "no un 401/403 limpio — revisar si se quiere ese comportamiento)")
     void validarToken_tokenExpirado_lanzaExpiredJwtException() {
-        // Construimos un token ya caducado firmado con la misma clave privada real,
-        // sin depender de la expiración fija de 1h que usa JwtService.generarToken.
         String tokenExpirado = Jwts.builder()
                 .subject("ana@gmail.com")
                 .claim("roles", List.of("USER"))
@@ -93,9 +91,6 @@ class JwtServiceTest {
                 .roles("USER")
                 .build();
 
-        // jjwt valida la expiración DENTRO de parseSignedClaims() y lanza
-        // ExpiredJwtException antes de que el código de JwtService pueda
-        // comprobar nada por su cuenta.
         assertThatThrownBy(() -> jwtService.validarToken(tokenExpirado, userDetails))
                 .isInstanceOf(io.jsonwebtoken.ExpiredJwtException.class);
     }

@@ -37,7 +37,6 @@ class AuthFlowE2ETest {
                 "ciudad", "Madrid",
                 "direccion", "Calle Falsa 1");
 
-        // 1. Registro
         restClient.post().uri("/user/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(registro)
@@ -46,7 +45,6 @@ class AuthFlowE2ETest {
                 .expectBody(Map.class)
                 .value(body -> org.assertj.core.api.Assertions.assertThat(body.get("email")).isEqualTo("e2e@gmail.com"));
 
-        // 2. Login y extracción de Token
         final String[] tokenWrapper = new String[1];
         restClient.post().uri("/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -62,7 +60,6 @@ class AuthFlowE2ETest {
 
         String token = tokenWrapper[0];
 
-        // 3. Acceso a ruta autenticada /user/me
         restClient.get().uri("/user/me")
                 .headers(headers -> headers.setBearerAuth(token))
                 .exchange()
@@ -79,13 +76,11 @@ class AuthFlowE2ETest {
         Map<String, Object> registro = Map.of(
                 "email", "duplicado-e2e@gmail.com", "password", "clave123", "nombre", "X");
 
-        // Primer intento exitoso o controlado
         restClient.post().uri("/user/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(registro)
                 .exchange();
 
-        // Segundo intento duplicado
         restClient.post().uri("/user/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(registro)

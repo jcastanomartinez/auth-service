@@ -31,7 +31,6 @@ public class Perfil {
     @Column
     private String telefono;
 
-    // Perfil.java
     @OneToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;

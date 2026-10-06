@@ -47,17 +47,14 @@ public class AuthControllerTest {
     void login_credencialesInvalidas_devuelve401() {
         Map<String, String> loginRequest = Map.of("email", "error@gmail.com", "password", "incorrecta");
 
-        // Forzamos a que el servicio lance tu excepción de negocio real
+
         when(authService.loginUsuario(anyString(), anyString()))
                 .thenThrow(new IllegalArgumentException("Credenciales incorrectas"));
 
-        // SOLUCIÓN FINAL: JUnit captura el ServletException que envuelve tu IllegalArgumentException.
-        // Esto compila al 100%, no depende de filtros de seguridad y valida la causa del error.
         ServletException exception = assertThrows(ServletException.class, () -> mockMvc.perform(post("/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(loginRequest))));
 
-        // Verificamos que la causa raíz sea tu mensaje de error
         assertThat(exception.getCause()).isInstanceOf(IllegalArgumentException.class);
         assertThat(exception.getCause().getMessage()).contains("Credenciales incorrectas");
     }

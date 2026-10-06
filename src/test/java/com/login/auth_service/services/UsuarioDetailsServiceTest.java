@@ -38,7 +38,6 @@ class UsuarioDetailsServiceTest {
 
         assertThat(userDetails.getUsername()).isEqualTo("ana@gmail.com");
         assertThat(userDetails.getPassword()).isEqualTo("hash");
-        // User.builder().roles("USER") añade el prefijo ROLE_ automáticamente
         assertThat(userDetails.getAuthorities())
                 .extracting(Object::toString)
                 .containsExactly("ROLE_USER");
