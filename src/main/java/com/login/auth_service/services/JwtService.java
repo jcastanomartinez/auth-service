@@ -22,7 +22,7 @@ public class JwtService {
 
 
     private final RsaKeyProvider rsaKeyProvider;
-    private final long jwtExpiration = 3600000; // o sigue leyéndolo con @Value si prefieres
+    private final long jwtExpiration = 3600000;
 
     public JwtService(RsaKeyProvider rsaKeyProvider) {
         this.rsaKeyProvider = rsaKeyProvider;

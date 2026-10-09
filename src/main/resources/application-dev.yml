@@ -2,7 +2,7 @@ spring:
   application:
     name: auth-service
   datasource:
-    url: jdbc:postgresql://localhost:5433/auth
+    url: jdbc:postgresql://localhost:5432/auth-db
     username: auth_user
     password: T0byt081*
   jpa:
@@ -15,7 +15,7 @@ spring:
       mode: always
 
 server:
-  port: 8080
+  port: 8081
 
 logging:
   level:
